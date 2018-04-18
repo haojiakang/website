@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="messageflow-material-config">
+    <Properties>
+        <Property name="log-path">../logs</Property>
+        <Property name="log-file-sizelimit">1GB</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console-log" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d -- %p [%t] %C{2} (%F:%L) - %m %X{request_id}%n"/>
+        </Console>
+        <RollingFile name="info-log" fileName="${log-path}/info.log"
+                     filePattern="${log-path}/info.log.%d{yyyyMMdd-HH}">
+            <PatternLayout>
+                <Pattern>[%level] %d{yyyyMMdd HH:mm:ss.SSS} [%t] %c{1} - %msg %X{request_id}%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.weibo.api.materialconfig" level="debug" additivity="false">
+            <appender-ref ref="info-log" level="info"/>
+            <!--<appender-ref ref="console-log" level="debug"/>-->
+        </Logger>
+        <Root level="info" additivity="false">
+            <!--<AppenderRef ref="info-log"/>-->
+            <!--<appender-ref ref="console-log" level="info"/>-->
+        </Root>
+    </Loggers>
+</Configuration>
